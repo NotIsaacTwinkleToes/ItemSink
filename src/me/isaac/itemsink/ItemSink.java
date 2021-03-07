@@ -23,6 +23,7 @@ import me.isaac.itemsink.util.MultiInventory;
 public class ItemSink extends JavaPlugin {
 	
 	private static MultiInventory whitelist;
+	public static ArrayList<Item> sinkingItems = new ArrayList<Item>();
 	
 	public void onEnable() {
 		
@@ -41,41 +42,22 @@ public class ItemSink extends JavaPlugin {
 								if (whitelist.whitelistContains(((Item) entities).getItemStack()))
 									continue;
 								
-								if (entities.isInWater()) {
-									
-									Vector velo = entities.getVelocity();
-									
-									velo.setY(velo.getY() - .01);
-									
-									if (velo.getY() < -.05) {
-										velo.setY(-.04);
-									}
-									
-									entities.setVelocity(velo);
-									
-								}
+								sinkItem((Item) entities);
+								
 							} else {
 								if (!whitelist.whitelistContains(((Item) entities).getItemStack()))
 									continue;
 								
-								if (entities.isInWater()) {
-									
-									Vector velo = entities.getVelocity();
-									
-									velo.setY(velo.getY() - .01);
-									
-									if (velo.getY() < -.05) {
-										velo.setY(-.04);
-									}
-									
-									entities.setVelocity(velo);
-									
-								}
+								floatItem((Item) entities);
 							}
 							
 							
 						}
 					}
+				}
+				
+				for (Item items : sinkingItems) {
+					sinkItem(items);
 				}
 				
 			}
@@ -134,6 +116,25 @@ public class ItemSink extends JavaPlugin {
 	
 	public static MultiInventory getWhitelist() {
 		return whitelist;
+	}
+	
+	public static void floatItem(Item item) {
+		if (item.isInWater()) {
+			Vector velo = item.getVelocity();
+			velo.setY(velo.getY() + .01);
+			if (velo.getY() < -.05)
+				velo.setY(-.04);
+			item.setVelocity(velo);
+		}
+	}
+	public static void sinkItem(Item item) {
+		if (item.isInWater()) {
+			Vector velo = item.getVelocity();
+			velo.setY(velo.getY() - .01);
+			if (velo.getY() < -.05)
+				velo.setY(-.04);
+			item.setVelocity(velo);
+		}
 	}
 	
 }
