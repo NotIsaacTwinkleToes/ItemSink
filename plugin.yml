@@ -1,0 +1,12 @@
+main: me.isaac.itemsink.ItemSink
+name: ItemSink
+version: 1.1
+description: Stop items from floating
+author: IsaacTwinkleToes
+api-version: 1.16
+commands:
+   itemsinkgui:
+      description: Set whitelist/blacklist for materials that will sink
+      usage: /isg
+      permission: itemsink.admin
+      aliases: [isg]
